@@ -1,0 +1,56 @@
+
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block  content %}
+    <br>
+    <br>
+    <div class="content-section">
+        <div class="media">
+        {% if user.profile.profile_pic %}
+        <img class="rounded-circle account-img" width=100px height=100px src="{{ user.profile.profile_pic.url }}" style="padding:10px;margin-right: 20px;">
+        {% endif %}
+            <div class="media-body" class="d">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <h6 class="text-secondary">{{ user.email }}</h6>
+            <p class="text-secondary">Bio: {{ request.user.profile.bio }}</p>
+            </div>
+        </div>
+        <div class="my-3">
+        <form method="POST" enctype="multipart/form-data" >
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4 "> To Update User Info.</legend>
+            Username : 
+                <br>{{ u_form.username }}
+                <br>
+                <br>
+                Email :
+                <br>
+                {{ u_form.email }}
+                <br>
+                <br>
+                <br>
+                Profile picture :
+                <br>
+            {{ p_form.profile_pic }}  
+            <br> 
+            <br>
+            Bio :
+            <br>
+            {{ p_form.bio }}   
+            <br>
+            <br>
+            Semester :
+            <br>
+            {{ p_form.sem }}   
+            <br>
+            <br>
+        </fieldset>
+        <button class="btn btn-outline-info" type="submit"> Update </button>
+        </form>
+        </div>
+    </div>
+{% endblock  %} 
+
+

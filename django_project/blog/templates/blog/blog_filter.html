@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block  content %}
+      <br>
+      <div class="content-section">
+        <form method="get" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Blog Post</legend>
+                <br>
+                Title: {{ myfilter.form.title }}
+                <br>
+                <br>
+                company = {{ myfilter.form.company_name }}
+                <br>
+                <br>
+                salary = {{ myfilter.form.salary }}
+                <br>
+                <br>
+                author = {{ myfilter.form.author }}
+                <br>
+                <br>
+                Start_date = {{ myfilter.form.start_date }}
+                <br>
+                <br>
+                end_date  = {{ myfilter.form.end_date }}
+                <br>
+                <br>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Filter</button>
+            </div>
+        </form>
+    </div>
+
+    {% for blog in blogs  %}
+    <article class="media content-section my-2">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            {% if blog.author.profile.profile_pic %}
+            <img class="rounded-circle mb-3" width=40px src="{{ blog.author.profile.profile_pic.url }}">
+            {% endif %}
+            <h4 class="card-title"><a class="article-title" href="{% url 'post-detail' blog.id %}" >{{blog.title}} </a></h4>
+            <h6 class="card-subtitle mb-2 text-muted"> <a href="{% url 'user-home' blog.author.id %}"> Author -- {{blog.author}} </a> </h6>
+            <p> Date Posted: {{ blog.date_posted|date:"M d, Y" }}</p>
+            <br>
+            <p class="card-text"> {{blog.content}}</p>
+            
+        </div>
+    </div>
+    </article>
+    <br>
+    {% endfor %}
+
+
+{% endblock  %} 
